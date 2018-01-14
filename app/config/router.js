@@ -4,6 +4,7 @@ import { StackNavigator } from 'react-navigation';
 import Main from '../components/Main';
 import MoviesListScreen from '../components/MoviesListScreen';
 import MovieEditScreen from '../components/MovieEditScreen';
+import MovieCreateScreen from '../components/MovieCreateScreen';
 
 export const Root = StackNavigator({
   Main: {
@@ -22,6 +23,12 @@ export const Root = StackNavigator({
     screen: MovieEditScreen,
     navigationOptions: {
       title: 'Edit Movie'
+    }
+  },
+  MovieCreateScreen: {
+    screen: MovieCreateScreen,
+    navigationOptions: {
+      title: 'Create Movie'
     }
   }
 });
