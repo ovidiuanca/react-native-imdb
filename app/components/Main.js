@@ -20,7 +20,6 @@ export default class MoviesListScreen extends React.Component {
     this.props.navigation.navigate('MoviesListScreen');
   }
 
-
   render() {
     return (
       <View>

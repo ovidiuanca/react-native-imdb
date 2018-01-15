@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, FlatList, Text} from 'react-native';
+import { View, FlatList, Text, Picker} from 'react-native';
 import { ListItem, FormLabel, Button,
         FormInput, FormValidationMessage } from 'react-native-elements';
 
@@ -7,6 +7,7 @@ export default class MovieCreateScreen extends React.Component {
   constructor(props){
   	super(props);
   	this.state = {
+      key: Math.floor(new Date()) + Math.floor(Math.random() * 10000000).toString(),
       title: "",
       year: "",
       duration: "",
@@ -18,13 +19,6 @@ export default class MovieCreateScreen extends React.Component {
     this.setState(() => {
       return {
         title: event
-      }
-    });
-  }
-  handleYearChange = (event) => {
-    this.setState(() => {
-      return {
-        year: event
       }
     });
   }
@@ -43,22 +37,33 @@ export default class MovieCreateScreen extends React.Component {
     });
   }
   handleSubmit = () => {
-    console.log(this.props)
     this.props.navigation.state.params.createMovie(this.state);
     this.props.navigation.goBack();
   }
+  updatePicker = (year) => {
+    this.setState(() => {
+      return {
+        year: year
+      }
+    });
+  }
   render() {
+    const years = ['1999', '2000', '2001', '2002', '2003', '2004'];
+
     return(
       <View>
         <FormLabel>Title</FormLabel>
         <FormInput
           onChangeText={this.handleTitleChange}
         />
-        {/* <FormValidationMessage>Error message</FormValidationMessage> */}
         <FormLabel>Year</FormLabel>
-        <FormInput
-          onChangeText={this.handleYearChange}
-        />
+        <Picker selectedValue = {this.state.year} onValueChange = {this.updatePicker}>
+          {years.map((year) =>
+            <Picker.Item label = {year} value = {year} />
+          )}
+        </Picker>
+        
+
         <FormLabel>Genre</FormLabel>
         <FormInput
           onChangeText={this.handleGenreChange}

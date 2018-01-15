@@ -8,13 +8,12 @@ export default class MovieEditScreen extends React.Component {
   	super(props);
     
   	this.state = {
+      key: this.props.navigation.state.params.key,
       title: this.props.navigation.state.params.title,
       year: this.props.navigation.state.params.year,
       duration: this.props.navigation.state.params.duration,
       genre: this.props.navigation.state.params.genre,
-      index: this.props.navigation.state.params.index,
-      avatar: this.props.navigation.state.params.avatar,
-      key: this.props.navigation.state.params.key
+      avatar: this.props.navigation.state.params.avatar
     };
   }
   handleTitleChange = (event) => {

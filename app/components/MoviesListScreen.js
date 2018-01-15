@@ -15,34 +15,44 @@ export default class MoviesListScreen extends React.Component {
   	this.state = {
       itemToDelete: {},
       modalVisible: false,
-      movies: [
-        {
-          key: 'a',
-          index: 1,
-          title: 'Fight Club',
-          year: '1999',
-          duration: '139',
-          genre: 'Drama',
-          avatar: 'https://images-na.ssl-images-amazon.com/images/M/MV5BZGY5Y2RjMmItNDg5Yy00NjUwLThjMTEtNDc2OGUzNTBiYmM1XkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SX300.jpg'
-        }
-      ]
+      movies: new Array
     };
     this.createMovie = this.createMovie.bind(this);
     this.updateMovie = this.updateMovie.bind(this);
   }
+  componentWillMount = async () => {
+    movies = await AsyncStorage.getItem('movies');
+    parsed = JSON.parse(movies);
+
+    this.setState(() => {
+      return {
+        movies: parsed
+      }
+    })
+  }
   updateMovie = (movie) => {
     newState = this.state
-    newState.movies[movie.index] = movie
 
+    const oldMovieIndex = newState.movies.findIndex((val) => {
+      return val.key === movie.key
+    })
+
+    newState.movies[oldMovieIndex] = movie
 
     this.setState(() => {
       return {
         movies: newState.movies
       }
     });
+
+    this.saveToLocalStorage();
+  }
+  saveToLocalStorage = () => {
+    AsyncStorage.setItem('movies', JSON.stringify(this.state.movies))
   }
   createMovie = (item) => {
     newState = this.state
+
     newState.movies.push(item)
 
     this.setState(() => {
@@ -50,6 +60,8 @@ export default class MoviesListScreen extends React.Component {
         movies: newState.movies
       }
     });
+
+    this.saveToLocalStorage();
   }
   editMovie = (item) => {
     const updateMovie = this.updateMovie
@@ -88,8 +100,8 @@ export default class MoviesListScreen extends React.Component {
         movies: newMovies
       }
     });
-
-    this.closeModal()
+    this.saveToLocalStorage();
+    this.closeModal();
   }
   render() {
     return (

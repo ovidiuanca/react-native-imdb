@@ -27,4 +27,8 @@ export default StyleSheet.create({
     justifyContent: 'flex-end',
     margin: 0,
   },
+  chart: {
+    width: 200,
+    height: 200,
+  }
 });
